@@ -9,6 +9,7 @@ const dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 // save to dynamo
 async function saveData(A,B,C){
+
     const params = {
         RequestItems: {
             Hello: [
@@ -52,33 +53,30 @@ async function saveData(A,B,C){
 
 // main handler
 exports.handler = async function (event) {
-    console.log("request:", JSON.stringify(event))
+    
+    const {path, emails} = JSON.parse(event.body)
     
     console.log('SAVING DATA:')
     
     
     
     
-    const domain = 'lemonshell.com'
-    const email = 'mike@lemonshell.com'
+
+    const x = path.split('/')
+    const email = emails[0]
     const url = 'https://lemonshell.com'
-    const pat = url + '/contact'
-    const user = 'mike'
     
+    const [user, domain] = email.split('@')
     
     const response = await saveData(
         [`DOMAIN#${domain}`,user],
         [`URL#${url}`, email],
-        [email, `PATH#${pat}`]
+        [email, `PATH#${path}`]
     )
     
     
     console.log('RESPONSE', response)
-    console.log(event)
-
-    let {path, emails} = event['queryStringParameters']
-
-    return sendRes(200, "Hey" + path + emails)
+    return sendRes(200, event.body)
 };
   
   

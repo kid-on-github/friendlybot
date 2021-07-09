@@ -35,7 +35,7 @@ export class BackendStack extends cdk.Stack {
 
     api.root
       .resourceForPath("hello")
-      .addMethod("GET", new apigw.LambdaIntegration(dynamoLambda));
+      .addMethod("POST", new apigw.LambdaIntegration(dynamoLambda));
 
     new cdk.CfnOutput(this, "HTTP API URL", {
       value: api.url ?? "Something went wrong with the deploy",
