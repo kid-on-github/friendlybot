@@ -42,7 +42,7 @@ function chunkEmails(emailList, i=0){
     
     saveEmails(window.location.href, chunk)
 
-    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 1000)
+    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 10)
 }
 
 
@@ -53,7 +53,6 @@ function chunkEmails(emailList, i=0){
 
 
 function saveEmails(path, emails){
-    console.log('Saving emails...')
     let myHeaders = new Headers()
     myHeaders.append("Content-Type", "application/json")
 
