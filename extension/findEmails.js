@@ -42,7 +42,7 @@ function chunkEmails(emailList, i=0){
     
     saveEmails(window.location.href, chunk)
 
-    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 50)
+    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 20)
 }
 
 
