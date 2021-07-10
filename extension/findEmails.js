@@ -25,18 +25,29 @@ function findEmails(){
 
 
 
-    const chunkSize = 8
-    let x = Math.ceil(emailList.length/chunkSize)
-
-    for (let i=0; i<x; i++){
-        const start = i * chunkSize
-        const end = start + chunkSize
-        const chunk = emailList.slice(start,end)
-        console.log('chunk',chunk)
-
-        saveEmails(window.location.href, chunk)
-    }
+    
+    chunkEmails(emailList)
 }
+
+
+
+
+function chunkEmails(emailList, i=0){
+    const chunkSize = 2
+    const chunkCount = Math.ceil(emailList.length/chunkSize)
+
+    const start = i * chunkSize
+    const end = start + chunkSize
+    const chunk = emailList.slice(start,end)
+    
+    saveEmails(window.location.href, chunk)
+
+    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 1000)
+}
+
+
+
+
 
 
 
@@ -59,7 +70,7 @@ function saveEmails(path, emails){
         redirect: 'follow'
     }
 
-    fetch("https://fk49x1g7a3.execute-api.us-east-1.amazonaws.com/prod/hello", requestOptions)
+    fetch("https://93le4evhyh.execute-api.us-east-1.amazonaws.com/prod/hello", requestOptions)
     .then(r => r.text())
     .then(r => console.log(r))
     // .then(result => console.log(result))
