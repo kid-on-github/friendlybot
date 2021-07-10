@@ -31,7 +31,11 @@ export class BackendStack extends cdk.Stack {
 
 
     // create the API Gateway with one method and path
-    const api = new apigw.RestApi(this, "hello-api");
+    const api = new apigw.RestApi(this, "hello-api", {
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigw.Cors.ALL_ORIGINS
+      }
+    });
 
     api.root
       .resourceForPath("hello")

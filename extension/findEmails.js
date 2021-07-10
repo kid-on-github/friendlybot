@@ -53,16 +53,17 @@ function saveEmails(path, emails){
     
     let requestOptions = {
         method: 'POST',
-        mode: 'no-cors',
+        // mode: 'no-cors',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
     }
 
-    fetch("https://fehuatfkq6.execute-api.us-east-1.amazonaws.com/prod/hello", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error))
+    fetch("https://fk49x1g7a3.execute-api.us-east-1.amazonaws.com/prod/hello", requestOptions)
+    .then(r => r.text())
+    .then(r => console.log(r))
+    // .then(result => console.log(result))
+    // .catch(error => console.log('error', error))
 }
 
 

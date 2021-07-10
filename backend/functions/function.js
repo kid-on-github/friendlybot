@@ -40,7 +40,6 @@ function buildRecordSet(path, url, email){
 
 // save to dynamo
 async function saveData(records){
-    console.log('records',records)
     let response
     try{
         response = await dynamodb.batchWriteItem(
@@ -59,12 +58,7 @@ async function saveData(records){
 
 
 async function buildRecords(path, emails){
-    console.log('SAVING EMAILS:', emails)
-    
-    
-    
     const url = path.split('/').slice(0,3).join('/')
-    
     let records = []
     
     emails.map(
@@ -74,12 +68,7 @@ async function buildRecords(path, emails){
         }
     )
     
-    console.log(records)
-    
-    const response = await saveData(records)
-    
-    console.log('RESPONSE', response)
-    return response
+    return records
 }
 
 
@@ -90,8 +79,16 @@ async function buildRecords(path, emails){
 // main handler
 exports.handler = async function (event) {
     const {path, emails} = JSON.parse(event.body)
-    await buildRecords(path, emails)
-    return sendRes(200, event.body)
+    console.log('emails',emails)
+    
+    const records = await buildRecords(path, emails)
+    console.log('records',records)
+    
+    const response = await saveData(records)
+    console.log('response', response)
+    
+    
+    return sendRes(200, JSON.stringify(response))
 }
   
   
@@ -108,8 +105,8 @@ const sendRes = (status, body) => {
       headers: {
         "Access-Control-Allow-Headers" : "Content-Type",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-        "Content-Type": "text/html"
+        "Access-Control-Allow-Methods": "POST",
+        "Content-Type": "json/application"
       },
       body: body,
     }
