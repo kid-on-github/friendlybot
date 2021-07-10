@@ -33,7 +33,7 @@ function findEmails(){
 
 
 function chunkEmails(emailList, i=0){
-    const chunkSize = 2
+    const chunkSize = 8
     const chunkCount = Math.ceil(emailList.length/chunkSize)
 
     const start = i * chunkSize
@@ -42,7 +42,7 @@ function chunkEmails(emailList, i=0){
     
     saveEmails(window.location.href, chunk)
 
-    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 10)
+    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 50)
 }
 
 
