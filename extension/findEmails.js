@@ -10,13 +10,16 @@ function findEmails(){
     for (let i of emails){
         try {
             let email = i.href.toLowerCase().split(':')[1]
-            emailList.push(email)
             let [username, domain] = email.split('@')
             
             !(domain in domains) && (domains[domain] = [])
-
-            domains[domain].push(username)
-            emailCount += 1
+            
+            // prevent duplicates
+            if (!domains[domain].includes(username)){
+                domains[domain].push(username)
+                emailCount += 1
+                emailList.push(email)
+            } 
         }
         catch {/* dang */}
     }
@@ -69,11 +72,18 @@ function saveEmails(path, emails){
         redirect: 'follow'
     }
 
+    console.log('Saving some emails...')
     fetch("https://93le4evhyh.execute-api.us-east-1.amazonaws.com/prod/hello", requestOptions)
-    .then(r => r.text())
-    .then(r => console.log(r))
-    // .then(result => console.log(result))
-    // .catch(error => console.log('error', error))
+    .then(r => r.json())
+    .then(r => {
+
+        const success = JSON.stringify(r) === '{"UnprocessedItems":{}}'
+
+        if(!success){
+            console.log(r)
+            console.log(emails)
+        }
+    })
 }
 
 
