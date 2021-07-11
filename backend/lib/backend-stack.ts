@@ -16,32 +16,55 @@ export class BackendStack extends cdk.Stack {
     });
 
 
-    // lambda function
-    const dynamoLambda = new lambda.Function(this, "DynamoLambdaHandler", {
+    // lambda function - post email api
+    const postEmailLambda = new lambda.Function(this, "postEmailLambda", {
       runtime: lambda.Runtime.NODEJS_12_X,
       code: lambda.Code.fromAsset("functions"),
-      handler: "function.handler",
+      handler: "postEmail.handler",
       environment: {
         PRIMARY_TABLE_NAME: table.tableName,
       },
     });
 
+
+    // lambda function - get email api
+    const getEmailLambda = new lambda.Function(this, "getEmailLambda", {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      code: lambda.Code.fromAsset("functions"),
+      handler: "getEmail.handler",
+      environment: {
+        PRIMARY_TABLE_NAME: table.tableName,
+      },
+    });
+
+
     // permissions to lambda to dynamo table
-    table.grantReadWriteData(dynamoLambda);
+    table.grantWriteData(postEmailLambda);
+    table.grantReadData(getEmailLambda);
 
 
-    // create the API Gateway with one method and path
-    const api = new apigw.RestApi(this, "post-email-api", {
+    // api
+    const api = new apigw.RestApi(this, "api", {
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS
       }
     });
 
-    api.root
-      .resourceForPath("primary")
-      .addMethod("POST", new apigw.LambdaIntegration(dynamoLambda));
 
-      
+    // post-email
+    api.root
+      .resourceForPath("post-email")
+      .addMethod("POST", new apigw.LambdaIntegration(postEmailLambda));
+
+
+    // get-email
+    api.root
+      .resourceForPath("get-email")
+      .addMethod("GET", new apigw.LambdaIntegration(getEmailLambda));
+  
+    
+
+
     new cdk.CfnOutput(this, "HTTP API URL", {
       value: api.url ?? "Something went wrong with the deploy",
     });
