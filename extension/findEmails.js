@@ -72,7 +72,7 @@ function saveEmails(path, emails){
     }
 
     console.log('Saving some emails...')
-    fetch("https://zawlk5qw4d.execute-api.us-east-1.amazonaws.com/prod/primary", requestOptions)
+    fetch("https://5aijchuyn4.execute-api.us-east-1.amazonaws.com/prod/post-email", requestOptions)
     .then(r => r.json())
     .then(r => {
 
