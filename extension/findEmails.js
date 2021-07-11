@@ -66,7 +66,6 @@ function saveEmails(path, emails){
     
     let requestOptions = {
         method: 'POST',
-        // mode: 'no-cors',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
@@ -80,8 +79,12 @@ function saveEmails(path, emails){
         const success = JSON.stringify(r) === '{"UnprocessedItems":{}}'
 
         if(!success){
-            console.log(r)
-            console.log(emails)
+            // retry submission
+            // bad solution, but it'll do for now
+            if ('UnprocessedItems' in r){
+                console.log('resending request')
+                setTimeout(()=>saveEmails(path, emails),100)
+            }
         }
     })
 }
