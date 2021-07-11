@@ -24,12 +24,11 @@ function buildRecordSet(path, url, email){
     // get important data points
     
     const [user, domain] = email.split('@')
+    const A = [`ORG#${domain}`,`${user}#${path}`]
+    const B = [`SITE#${url}`,`${email}`]
     
-    const A = [`DOMAIN#${domain}`,user]
-    const B = [`URL#${url}`, email]
-    const C = [email, `PATH#${path}`]
-    
-    return [record(A), record(B), record(C)]
+
+    return [record(A), record(B)]
 }
 
 
@@ -58,7 +57,7 @@ async function saveData(records){
 
 
 async function buildRecords(path, emails){
-    const url = path.split('/').slice(0,3).join('/')
+    const url = path.split('/')[2]
     let records = []
     
     emails.map(
