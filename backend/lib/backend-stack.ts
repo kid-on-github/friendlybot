@@ -8,8 +8,8 @@ export class BackendStack extends cdk.Stack {
     super(scope, id, props);
 
     //Dynamodb table definition
-    const table = new dynamodb.Table(this, "Hello", {
-      tableName:'Hello',
+    const table = new dynamodb.Table(this, "primary", {
+      tableName:'primary',
       partitionKey: { name: "pk", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "sk", type: dynamodb.AttributeType.STRING },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -22,7 +22,7 @@ export class BackendStack extends cdk.Stack {
       code: lambda.Code.fromAsset("functions"),
       handler: "function.handler",
       environment: {
-        HELLO_TABLE_NAME: table.tableName,
+        PRIMARY_TABLE_NAME: table.tableName,
       },
     });
 
@@ -31,16 +31,17 @@ export class BackendStack extends cdk.Stack {
 
 
     // create the API Gateway with one method and path
-    const api = new apigw.RestApi(this, "hello-api", {
+    const api = new apigw.RestApi(this, "post-email-api", {
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS
       }
     });
 
     api.root
-      .resourceForPath("hello")
+      .resourceForPath("primary")
       .addMethod("POST", new apigw.LambdaIntegration(dynamoLambda));
 
+      
     new cdk.CfnOutput(this, "HTTP API URL", {
       value: api.url ?? "Something went wrong with the deploy",
     });

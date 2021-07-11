@@ -72,7 +72,7 @@ function saveEmails(path, emails){
     }
 
     console.log('Saving some emails...')
-    fetch("https://93le4evhyh.execute-api.us-east-1.amazonaws.com/prod/hello", requestOptions)
+    fetch("https://zawlk5qw4d.execute-api.us-east-1.amazonaws.com/prod/primary", requestOptions)
     .then(r => r.json())
     .then(r => {
 
@@ -83,7 +83,7 @@ function saveEmails(path, emails){
             // bad solution, but it'll do for now
             if ('UnprocessedItems' in r){
                 console.log('resending request')
-                setTimeout(()=>saveEmails(path, emails),100)
+                setTimeout(()=>saveEmails(path, emails), 100)
             }
         }
     })

@@ -44,7 +44,7 @@ async function saveData(records){
     try{
         response = await dynamodb.batchWriteItem(
             {
-                RequestItems: { Hello: records }
+                RequestItems: { primary: records }
             }
         ).promise()
     }
