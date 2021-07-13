@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+:root{
+  --blue:#5FABE2;
+}
 
 body{
   margin:0;
@@ -10,14 +15,39 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 
+#searchBar{
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #333;
+  width: 450px;
+  padding: 6px 12px;
+  background-color: white;
+  margin: 20px;
+}
+
+#searchBar > *{
+  /* background-color: pink; */
+}
 
 #emailInput{
-  border-radius: 8px;
-  width: 450px;
   font-size: 30px;
-  padding: 6px 12px;
-  border: 2px solid #333;
-  margin: 20px;
+  flex-grow:1;
+  border: none;
+}
+
+#searchIcon{
+  font-size: 30px;
+  color: var(--blue);
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+#searchIcon:hover{
+  transform: scale(1.2);
 }
 
 #emailInput:focus{
@@ -49,4 +79,4 @@ h1{
 .fw500{font-weight: 500;}
 .fs24{font-size: 24px;}
 
-.color-blue{color:#5FABE2;}
+.color-blue{color:var(--blue);}

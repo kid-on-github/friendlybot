@@ -7,22 +7,21 @@ function App() {
   const [results, setResults] = useState([])
 
 
-  const getEmailLocations = (event) => { 
-    if (event.key === 'Enter') {
-      
-      var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
 
-      setResults({email})
-      
-      fetch(`https://5aijchuyn4.execute-api.us-east-1.amazonaws.com/prod/get-email?email=${email}`, requestOptions)
-        .then(response => response.json())
-        .then(result => setResults({email, results:result.results}))
-        .catch(error => console.log('error', error));
 
-    }
+  const getEmailLocations = () => { 
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    setResults({email})
+    
+    fetch(`https://5aijchuyn4.execute-api.us-east-1.amazonaws.com/prod/get-email?email=${email}`, requestOptions)
+      .then(response => response.json())
+      .then(result => setResults({email, results:result.results}))
+      .catch(error => console.log('error', error));
+
   }
 
 
@@ -32,9 +31,9 @@ function App() {
       <div className='search'>
         <h1>friendlybot.org</h1>
         <p className='fs24 fw300'>Where can <b className='color-blue'>YOUR</b> email be found?</p>
-        <div>
-          <input autoFocus type='email' id='emailInput' placeholder='you@example.com' onKeyUp={getEmailLocations} onChange={e=>setEmail(e.target.value)}/>
-          
+        <div id='searchBar'>
+          <input autoFocus type='email' id='emailInput' placeholder='you@example.com' onKeyUp={e => e.key === 'Enter' && getEmailLocations()} onChange={e=>setEmail(e.target.value)}/>
+          <span class="material-icons" id='searchIcon' onClick={getEmailLocations}>search</span>
         </div>
         <Results results={results}/>
       </div>
