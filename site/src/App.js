@@ -23,7 +23,7 @@ function App() {
         <p className='fs24 fw300'>Where can <b className='color-blue'>YOUR</b> email be found?</p>
         <div id='searchBar'>
           <input autoFocus type='email' id='emailInput' placeholder='you@example.com' onKeyUp={e => e.key === 'Enter' && getEmailLocations()} onChange={e=>setEmail(e.target.value)}/>
-          <span class="material-icons" id='searchIcon' onClick={getEmailLocations}>search</span>
+          <span className="material-icons" id='searchIcon' onClick={getEmailLocations}>search</span>
         </div>
         <Results results={results}/>
       </div>
@@ -43,8 +43,8 @@ function Header(props){
 
   return (
     <header>
-      <a className={clicked === 'home' && 'selected'} onClick={()=>setClicked('home')} href='./'>home</a>
-      <a className={clicked === 'mission' && 'selected'} onClick={()=>setClicked('mission')} href='./#mission'>mission</a>
+      <a className={clicked === 'home' && 'selected' || ''} onClick={()=>setClicked('home')} href='./'>home</a>
+      <a className={clicked === 'mission' && 'selected' || ''} onClick={()=>setClicked('mission')} href='./#mission'>mission</a>
       <a href='./'>docs</a>
       <a className='ul-blue' href='./'>download</a>
     </header>
