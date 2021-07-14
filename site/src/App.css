@@ -77,6 +77,55 @@ h1{
 .fw300{font-weight: 300;}
 .fw400{font-weight: 400;}
 .fw500{font-weight: 500;}
+
+.fs20{font-size: 20px;}
 .fs24{font-size: 24px;}
+.fs30{font-size: 30px;}
 
 .color-blue{color:var(--blue);}
+
+.ul-blue{
+  border-bottom: 2px solid var(--blue);
+}
+
+
+
+.results{
+  margin-top: 80px;
+}
+
+.results .fs30{
+  margin: 8px 0;
+}
+
+.results .fs20{
+  margin:0;
+  padding:6px 12px;
+  border-left: 3px solid var(--blue);
+}
+
+
+header{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 30px;
+  position: fixed;
+  width: 100%;
+}
+
+header a{
+  margin: 5px 10px;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  transition: color .15s, transform .15s;
+}
+
+header a:hover{
+  transform: scale(1.1);
+}
+
+header .selected{
+  color: var(--blue);
+}
