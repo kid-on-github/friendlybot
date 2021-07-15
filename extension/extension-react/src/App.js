@@ -70,9 +70,13 @@ function Search(){
       .catch(error => console.log('error', error));
   }
 
-  const links = results && results.results && results.results.map(
-    link => <p>{link}</p>
-  )
+  const links = results && 
+                results.results && 
+                results.results.length > 0
+                ? results.results.map(
+                  link => <p>{link}</p>
+                )
+                : <p>No results found</p>
 
   return (
     <div className={'search ' + (results ? 'results' : '')}>
