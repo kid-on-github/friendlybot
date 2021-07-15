@@ -1,6 +1,6 @@
 {
-  "name": "Email Finder",
-  "description": "Find those emails!",
+  "name": "Friendly Bot",
+  "description": "Let's help the internet protect their privacy.",
   "version": "0.0.1",
   "manifest_version": 3,
   
@@ -12,7 +12,7 @@
 
   "action": {
     "default_popup": "index.html",
-    "default_title": "Open the popup",
+    "default_title": "Friendly Bot",
     "default_icon": {
       "16": "/images/get_started16.png",
       "32": "/images/get_started32.png",
