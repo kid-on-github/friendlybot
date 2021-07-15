@@ -56,7 +56,6 @@ function Header(props){
 
 function Results(props){
   const {results} = props
-  console.log('r',results)
 
   const loaded = 'results' in results
 
