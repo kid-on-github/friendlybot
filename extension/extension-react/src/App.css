@@ -53,13 +53,39 @@ header button.selected{
   color: white;
 }
 
+
+.search{
+  justify-content: center;
+}
+
+.search.results{
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 82px;
+}
+
+.search.results h1{
+  display: none;
+}
+
+.search p{
+  font-size: 16px;
+  margin: 0;
+  padding: 5px;
+  border-left: 3px solid var(--blue);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  flex-grow: 0;
+}
+
 .search, .settings{
   width: 100%;
   min-height: 500px;
   padding: 30px;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
   align-items: center;
 }
 
@@ -72,6 +98,7 @@ header button.selected{
   align-items: center;
   background-color: white;
   padding: 2px 5px;
+  margin-bottom: 10px;
 }
 
 .inputBar input{
@@ -86,4 +113,14 @@ header button.selected{
 
 .inputBar .icon{
   color: var(--blue);
+}
+
+
+.icon{
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+.icon:hover{
+  transform: scale(1.15);
 }
