@@ -95,7 +95,7 @@ function InputBar(props){
   const [val, setVal] = useState('')
   return (
     <div className='inputBar'>
-      <input type={type} onChange={e=>setVal(e.target.value)} onKeyUp={e => e.key === 'Enter' && submit(val)}/>
+      <input autoFocus type={type} onChange={e=>setVal(e.target.value)} onKeyUp={e => e.key === 'Enter' && submit(val)}/>
       <Icon icon={icon} onClick={()=>submit(val)}/>
     </div>
   )
