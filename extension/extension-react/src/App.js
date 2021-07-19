@@ -122,14 +122,14 @@ function Settings(){
     let tmp = disabledSites
     if (!tmp.includes(domain)){
       tmp.push(domain)
-      setDisabledSite(tmp)
+      setDisabledSite([...tmp])
+      console.log(tmp, disabledSites)
     }
   }
 
-  const removeDisabledSite = (domain) => {
-    let tmp = disabledSites
 
-  }
+
+  const disabledList = disabledSites.map(domain => <DisabledSite domain={domain} key={domain}/>)
 
 
   return (
@@ -143,9 +143,23 @@ function Settings(){
       </div>
 
       <div className='section'>
-        <h6>Disabled Sites</h6>
-        <InputBar type='email' icon='add' submit={addDisabledSite} placeholder='example.com'/>
+        <div className='sectionTitle'>
+          <h6>Disabled Sites</h6>
+          <InputBar type='email' icon='add' submit={addDisabledSite} placeholder='example.com'/>
+        </div>
+        {disabledList}
       </div>
+    </div>
+  )
+}
+
+
+function DisabledSite(props){
+  const {domain} = props
+
+  return (
+    <div>
+      <p>{domain}</p>
     </div>
   )
 }
