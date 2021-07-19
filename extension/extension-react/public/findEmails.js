@@ -10,6 +10,7 @@ function findEmails(){
     for (let i of emails){
         try {
             let email = i.href.toLowerCase().split(':')[1]
+            email = email.split('?')[0]
             let [username, domain] = email.split('@')
             
             !(domain in domains) && (domains[domain] = [])
@@ -36,16 +37,19 @@ function findEmails(){
 
 
 function chunkEmails(emailList, i=0){
-    const chunkSize = 8
+    const chunkSize = 12
     const chunkCount = Math.ceil(emailList.length/chunkSize)
 
     const start = i * chunkSize
     const end = start + chunkSize
     const chunk = emailList.slice(start,end)
+    const path = window.location.href.split('?')[0]
     
-    saveEmails(window.location.href, chunk)
+    console.log('path',path)
 
-    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 20)
+    saveEmails(path, chunk)
+
+    ++i < chunkCount && setTimeout(()=>chunkEmails(emailList, i), 30)
 }
 
 

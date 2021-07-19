@@ -3,6 +3,9 @@
 
 :root{
   --blue:#5FABE2;
+  --green:#5FE29C;
+  --light-green:#DBF5E7;
+  --red: #E25F5F;
 }
 
 body{
@@ -41,6 +44,12 @@ h1{
   font-size: 35px;
   font-weight: 500;
   margin: 15px;
+}
+
+h6{
+  font-size: 16px;
+  font-weight: 400;
+  margin: 3px 0;
 }
 
 header{
@@ -116,6 +125,12 @@ header button.selected{
   align-items: center;
 }
 
+.settings {
+  padding-top:82px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .inputBar{
   border: 2px solid #333;
   border-radius: 8px;
@@ -150,4 +165,69 @@ header button.selected{
 
 .icon:hover{
   transform: scale(1.15);
+}
+
+
+.state{
+  display: flex; 
+}
+
+.state h2{
+  flex-grow: 1;
+}
+
+.state button{
+  width: 48px;
+  height: 32px;
+  display: block;
+  border: 2px solid #333;
+  border-radius: 18px;
+  background-color: var(--light-green);
+  cursor: pointer;
+}
+
+
+
+.state h2{
+  text-transform: capitalize;
+}
+
+.state.enabled h2{
+  color: var(--blue);
+}
+
+.state.disabled h2{
+  color: var(--red);
+}
+
+.state button::after{
+  content: "";
+  display: block;
+  height: 24px;
+  width: 24px;
+  background-color: var(--green);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 0 2px white;
+  right: -12px;
+}
+
+.state.disabled button::after{
+  left: -4px; 
+  background-color: #888;
+}
+
+.state.disabled button{
+  background-color: #ccc;
+}
+
+h2{
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.section{
+  margin-bottom: 50px;
+  width: 100%;
 }

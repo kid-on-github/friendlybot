@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 // APP
 function App() {
 
-  const [page, setPage] = useState('search');
+  const [page, setPage] = useState('settings');
 
   return (
     <div className="App">
@@ -87,7 +87,7 @@ function Search(){
   return (
     <div className={'search ' + (results ? 'results' : '')}>
       <h1>friendlybot.org</h1>
-      <InputBar type='email' icon='search' submit={getEmailLocations}/>
+      <InputBar type='email' icon='search' submit={getEmailLocations} placeholder='you@example.com'/>
       {links}
     </div>
   )
@@ -101,11 +101,11 @@ function Search(){
 
 // INPUT BAR
 function InputBar(props){
-  const {type, icon, submit} = props
+  const {type, icon, submit, placeholder=''} = props
   const [val, setVal] = useState('')
   return (
     <div className='inputBar'>
-      <input autoFocus type={type} onChange={e=>setVal(e.target.value)} onKeyUp={e => e.key === 'Enter' && submit(val)}/>
+      <input autoFocus type={type} placeholder={placeholder} onChange={e=>setVal(e.target.value)} onKeyUp={e => e.key === 'Enter' && submit(val)}/>
       <Icon icon={icon} onClick={()=>submit(val)}/>
     </div>
   )
@@ -114,9 +114,38 @@ function InputBar(props){
 
 // SETTINGS PAGE
 function Settings(){
+
+  const [status, setStatus] = useState('enabled')
+  const [disabledSites, setDisabledSite] = useState([])
+
+  const addDisabledSite = (domain) => {
+    let tmp = disabledSites
+    if (!tmp.includes(domain)){
+      tmp.push(domain)
+      setDisabledSite(tmp)
+    }
+  }
+
+  const removeDisabledSite = (domain) => {
+    let tmp = disabledSites
+
+  }
+
+
   return (
-    <div>
-      
+    <div className='settings'>
+      <div className='section'>
+        <h6>Discovery</h6>
+        <div className={'state ' + status} onClick={()=>status === 'enabled' ? setStatus('disabled') : setStatus('enabled')}>
+          <h2>{status}</h2>
+          <button></button>
+        </div>
+      </div>
+
+      <div className='section'>
+        <h6>Disabled Sites</h6>
+        <InputBar type='email' icon='add' submit={addDisabledSite} placeholder='example.com'/>
+      </div>
     </div>
   )
 }
