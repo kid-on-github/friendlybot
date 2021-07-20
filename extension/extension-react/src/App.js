@@ -1,9 +1,18 @@
+/*global chrome*/
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 
 
 // APP
 function App() {
+
+  chrome.storage.sync.set({'key': 'value'}, function() {
+    console.log('Value is set to ' + 'value')
+  })
+  
+  chrome.storage.sync.get(['key'], function(result) {
+    console.log('Value currently is ' + result.key)
+  })
 
   const [page, setPage] = useState('settings');
 
@@ -112,21 +121,68 @@ function InputBar(props){
 }
 
 
+
+
+
+
+
+
+
+
+
+
 // SETTINGS PAGE
 function Settings(){
 
-  const [status, setStatus] = useState('enabled')
+  const [status, setStatus] = useState('disabled')
   const [disabledSites, setDisabledSite] = useState([])
+
+  useEffect(() => {
+
+    // get disabled sites
+    chrome.storage.sync.get(['disabledSites'], function(result) {
+      const currDisabledSites = result.disabledSites
+
+      // only update if change occurred
+      if (JSON.stringify(disabledSites) !== JSON.stringify(currDisabledSites)){
+        setDisabledSite(currDisabledSites)
+      }
+    })
+
+
+
+    // get status
+    chrome.storage.sync.get(['status'], function(result) {
+      const currStatus = result.status
+      
+      // only update if change occurred
+      if (currStatus !== status){
+        setStatus(result.status)
+      }
+    })
+  })
 
   const addDisabledSite = (domain) => {
     let tmp = disabledSites
     if (!tmp.includes(domain)){
       tmp.push(domain)
       setDisabledSite([...tmp])
-      console.log(tmp, disabledSites)
+      
+      // save to chrome storage
+      chrome.storage.sync.set({'disabledSites': tmp}, function() {
+        console.log('disabled sites sync',disabledSites)
+      })
+    
     }
   }
 
+  const toggleStatus = () => {
+    const newStatus = status === 'enabled' ? 'disabled' : 'enabled'
+    setStatus(newStatus)
+
+    // save to chrome storage
+    chrome.storage.sync.set({'status': newStatus})
+  }
 
 
   const disabledList = disabledSites.map(domain => <DisabledSite domain={domain} key={domain}/>)
@@ -136,7 +192,7 @@ function Settings(){
     <div className='settings'>
       <div className='section'>
         <h6>Discovery</h6>
-        <div className={'state ' + status} onClick={()=>status === 'enabled' ? setStatus('disabled') : setStatus('enabled')}>
+        <div className={'state ' + status} onClick={()=>toggleStatus()}>
           <h2>{status}</h2>
           <button></button>
         </div>
@@ -154,11 +210,18 @@ function Settings(){
 }
 
 
+
+
+
+
+
+
+
 function DisabledSite(props){
   const {domain} = props
 
   return (
-    <div>
+    <div className='disabledSite'>
       <p>{domain}</p>
     </div>
   )

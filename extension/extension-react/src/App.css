@@ -105,7 +105,7 @@ header button.selected{
   box-shadow: 0 -10px 0 10px #fafafa;
 }
 
-.search p{
+.search p, .disabledSite p{
   font-size: 16px;
   margin: 0; 
   padding: 5px;
@@ -238,3 +238,9 @@ h2{
   background-color: #fafafa;
   box-shadow: 0 -10px 0 10px #fafafa;
 }
+
+
+.disabledSite{
+  display: flex;
+}
+

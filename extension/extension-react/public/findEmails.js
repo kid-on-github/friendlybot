@@ -99,5 +99,8 @@ function saveEmails(path, emails){
 
 window.onload = function() {
 	console.log('Looking for emails...')
+    chrome.storage.sync.get(['key'], function(result) {
+        console.log('Value currently is ' + result.key)
+    })
     findEmails()
 }
