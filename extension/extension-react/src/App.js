@@ -5,16 +5,7 @@ import React, { useState, useEffect  } from 'react';
 
 // APP
 function App() {
-
-  chrome.storage.sync.set({'key': 'value'}, function() {
-    console.log('Value is set to ' + 'value')
-  })
-  
-  chrome.storage.sync.get(['key'], function(result) {
-    console.log('Value currently is ' + result.key)
-  })
-
-  const [page, setPage] = useState('settings');
+  const [page, setPage] = useState('search');
 
   return (
     <div className="App">
@@ -134,8 +125,8 @@ function InputBar(props){
 // SETTINGS PAGE
 function Settings(){
 
-  const [status, setStatus] = useState('disabled')
-  const [disabledSites, setDisabledSite] = useState([])
+  const [status, setStatus] = useState('enabled')
+  const [disabledSites, setDisabledSites] = useState([])
 
   useEffect(() => {
 
@@ -145,7 +136,7 @@ function Settings(){
 
       // only update if change occurred
       if (JSON.stringify(disabledSites) !== JSON.stringify(currDisabledSites)){
-        setDisabledSite(currDisabledSites)
+        setDisabledSites(currDisabledSites)
       }
     })
 
@@ -166,13 +157,26 @@ function Settings(){
     let tmp = disabledSites
     if (!tmp.includes(domain)){
       tmp.push(domain)
-      setDisabledSite([...tmp])
+      setDisabledSites([...tmp])
       
       // save to chrome storage
       chrome.storage.sync.set({'disabledSites': tmp}, function() {
         console.log('disabled sites sync',disabledSites)
-      })
-    
+      }) 
+    }
+  }
+
+  const rmDisabledSite = (domain) => {
+    let tmp = disabledSites
+    let index = tmp.indexOf(domain)
+
+    if (index !== -1){
+      tmp.splice(index, 1)
+      console.log('tmp!!', tmp)
+      setDisabledSites([...tmp])
+
+      // save to chrome storage
+      chrome.storage.sync.set({'disabledSites': tmp}) 
     }
   }
 
@@ -185,7 +189,7 @@ function Settings(){
   }
 
 
-  const disabledList = disabledSites.map(domain => <DisabledSite domain={domain} key={domain}/>)
+  const disabledList = disabledSites.map(domain => <DisabledSite domain={domain} onClick={rmDisabledSite} key={domain}/>)
 
 
   return (
@@ -218,11 +222,12 @@ function Settings(){
 
 
 function DisabledSite(props){
-  const {domain} = props
+  const {domain, onClick} = props
 
   return (
     <div className='disabledSite'>
       <p>{domain}</p>
+      <Icon icon='delete' onClick={()=>onClick(domain)}/>
     </div>
   )
 }

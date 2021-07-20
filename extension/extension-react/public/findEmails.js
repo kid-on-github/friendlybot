@@ -1,5 +1,6 @@
 
 function findEmails(){
+    console.log('Looking for emails...')
     let emails = document.querySelectorAll('a[href^="mail"]')
     
     let domains = {}
@@ -98,9 +99,16 @@ function saveEmails(path, emails){
 
 
 window.onload = function() {
-	console.log('Looking for emails...')
-    chrome.storage.sync.get(['key'], function(result) {
-        console.log('Value currently is ' + result.key)
+    chrome.storage.sync.get(['disabledSites','status'], results => {
+        const {disabledSites, status} = results
+        if (status === 'enabled'){
+            const domain = window.location.href.split('/')[2].split(':')[0]
+            console.log('domain',domain)
+            if (!disabledSites.includes(domain)){
+                findEmails()
+            }
+        }
     })
-    findEmails()
+
+
 }

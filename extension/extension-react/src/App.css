@@ -160,6 +160,7 @@ header button.selected{
 
 .icon{
   cursor: pointer;
+  user-select: none; /* disable highlighting */
   transition: transform .15s;
 }
 
@@ -242,5 +243,24 @@ h2{
 
 .disabledSite{
   display: flex;
+  /* justify-content: center; */
+  align-items: center;
 }
 
+.disabledSite p{
+  flex-grow: 1;
+}
+
+.disabledSite .icon{
+  color:var(--red);
+  display: none;
+  aspect-ratio: 1/1;
+}
+
+.disabledSite:hover{
+  background-color: #dfdfdf;
+}
+
+.disabledSite:hover .icon{
+  display: block;
+}
