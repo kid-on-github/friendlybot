@@ -38,7 +38,7 @@ export class BackendStack extends cdk.Stack {
     });
 
 
-    // permissions to lambda to dynamo table
+    // access permissions (lambda to dynamo)
     table.grantWriteData(postEmailLambda);
     table.grantReadData(getEmailLambda);
 
